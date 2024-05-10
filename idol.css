@@ -1,0 +1,103 @@
+    body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    }
+
+    #map {
+      height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    }
+    #searchContainer {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    }
+
+    #searchInput {
+    width: 200px;
+    }
+
+    #searchButton {
+    margin-left: 5px;
+    }
+
+    #fileUploadButton {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    z-index: 1001;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 14px;
+    }
+
+    #fileUploadButton:hover {
+    background-color: #0056b3;
+    }
+
+    #basemapButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 14px;
+    }
+
+    #basemapButton:hover {
+    background-color: #0056b3;
+    }
+
+    #logo {
+    position: absolute;
+    bottom: 40px;
+    right: 10px;
+    z-index: 1000;
+    width: 200px;
+    }
+
+    /* Icono */
+.icon {
+  max-width: 70%;
+  max-height: 70%;
+  margin: 4px;
+}
+/* Estilo para el nuevo icono "folder.svg" */
+.folder-icon {
+  width: 24px; /* Ancho del nuevo icono */
+  height: 24px; /* Alto del nuevo icono */
+  margin: 6px; /* Margen alrededor del nuevo icono */
+  /* Agrega más propiedades de estilo según sea necesario */
+  background: transparent; /* Fondo transparente */
+}
+#imgchange {
+  max-width: 100%;
+  height: auto;
+}
+.button-group {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.image-button,
+.download-button {
+  margin: 5px;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suplexa-Geovisor</title>
+    <link rel="icon" href="logosuplexa.png" type="image/png">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="idol.css">
+</head>
+<body>
+    <div id="map"><img id="logo" src="logosuplexa.png" alt="Logo SUPLEXA" width="100" height="auto"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="../dist/Control.Geocoder.js"></script>
+    <script src="huella.js"></script>
+    <script src="point.js"></script>
+    <script src="polyne.js"></script>
+    <script src="FO.js"></script>
+    <script src="FIBER.js"></script>
+    <script>
+        var map = L.map('map').setView([-9.1900, -75.0152], 6);
+
+        // Mapa Base de Google Maps, OpenStreetMap, Google Satélite--------------------------------
+        var googleMaps = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '© Suplexa S.A.C'
+        }).addTo(map);
+
+        var openStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© Suplexa S.A.C'
+        });
+
+        var googleSat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '© Suplexa S.A.C'
+        });
+
+        L.control.layers({
+            'Google Maps': googleMaps,
+            'OpenStreetMap': openStreetMap,
+            'Google Satelite': googleSat
+        }).addTo(map);
+
+        // Cambio de layers
+        function changeBaseLayer(layer) {
+            window.map.eachLayer(function (currentLayer) {
+                window.map.removeLayer(currentLayer);
+            });
+            layer.addTo(window.map);
+        }
+
+        var style = {
+            color: 'magenta',
+            opacity: 1.0,
+            fillOpacity: 0.2,
+            weight: 3,
+            clickable: true
+        };
+
+        // Agregar imagen y texto
+        var layerInfoDiv = document.createElement('div');
+        layerInfoDiv.className = 'layer-info';
+        layerInfoDiv.innerHTML = '<p>Site WOW</p>' + '<img src="Site2.png" alt="Site WOW" width="25%" height="25">';
+        document.querySelector('.leaflet-control-layers-overlays').appendChild(layerInfoDiv);
+
+
+
+// FIBRA OPTICA
+var FO = L.geoJSON(FO, {
+            style: style,
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup("<b>Site de Inicio:</b> " + feature.properties.SITE_INI + "<br>" +
+                                 "<b>Site de Fin</b> " + feature.properties.SITE_FIN + "<br>" +
+                                "<b>Longitud de Cable:</b> " + feature.properties.LONG +"<br>" +
+                                "<b>Tipo de Cable:</b> " + feature.properties.TIPO_FO+ "<br>" +
+                                "<b>Nombrel del proyecto:</b> " + feature.properties.NOM_PROYEC);
+            }
+        }).addTo(map);
+// FIBRA
+var FIBER = L.geoJSON(FIBER, {
+            style: style,
+            onEachFeature: function (feature, layer) {
+                layer.bindPopup("<b>Site de Inicio:</b> " + feature.properties.SITE_INI + "<br>" +
+                                 "<b>Site de Fin</b> " + feature.properties.SITE_FIN + "<br>" +
+                                "<b>Longitud de Cable:</b> " + feature.properties.LONG +"<br>" +
+                                "<b>Tipo de Cable:</b> " + feature.properties.TIPO_FO+ "<br>" +
+                                "<b>Nombrel del proyecto:</b> " + feature.properties.NOM_PROYEC);
+            }
+        }).addTo(map);         
+    </script>
+    
+</body>
+</html>

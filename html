@@ -1,0 +1,76 @@
+        // Puntos GeoJSON
+        var pointIcon = L.icon({
+            iconUrl: 'Site2.png',
+           iconSize: [28, 28],
+            iconAnchor: [16, 26]
+        });
+
+        L.geoJSON(pointJSON, {
+            pointToLayer: function (feature, latlng) {
+                var marker = L.marker(latlng, { icon: pointIcon });
+                var imageLink = feature.properties.visual;
+                // Concatenar los atributos "item" y "nombre" con un guión en el tooltip
+              var tooltipContent = feature.properties.Item + " - " + feature.properties.Nombre;
+                marker.bindTooltip(tooltipContent, { permanent: true, direction: 'bottom', className: 'marker-label' });
+                // Construir el contenido del popup con los atributos
+                var popupContent =
+                    "<b>Proyecto:</b> " + feature.properties.Proyecto + "<br>" +
+                    "<b>Item:</b> " + feature.properties.Item + "<br>" +
+                    "<b>Nombre:</b> " + feature.properties.Nombre + "<br>" +
+                    "<b>Departamento:</b> " + feature.properties.Departamento + "<br>" +
+                "<b>Provincia:</b> " + feature.properties.Provincia + "<br>" +
+                    "<b>Distrito:</b> " + feature.properties.Distrito + "<br>" +
+                    "<b>Latitud:</b> " + feature.properties.Latitud + "<br>" +
+                    "<b>Longitud:</b> " + feature.properties.Longitud + "<br>" +
+                   "<b>Tipo de Implementación:</b> " + feature.properties["Tipo de Implementación"] + "<br>" +
+                    "<b>Fecha de Servicio:</b> " + feature.properties["Fecha de Servicio"] + "<br>" +
+                    "<b>Número de Bloques/Torres:</b> " + feature.properties["Número de Bloques/Torres"] + "<br>" +
+                  "<b>Número de Pisos:</b> " + feature.properties["Número de Pisos"] + "<br>" +
+                    "<b>Cantidad de Departamentos:</b> " + feature.properties["Cantidad de Departamentos"] + "<br>" +
+                    "<b>UTM X:</b> " + feature.properties["UTM X"] + "<br>" +
+                    "<b>UTM Y:</b> " + feature.properties["UTM Y"] + "<br>" +
+                    "<b>Cantidad de NAP:</b> " + feature.properties["Cantidad de NAP"] + "<br>" +
+                    "<b>Capacidad de Servicio %:</b> " + feature.properties["Capacidad de Servicio %"] + "<br>" +
+                    "<b>Número de Servicios Activos:</b> " + feature.properties["Número de Servicios Activos"] + "<br>" +
+                    "<b>Ruta de Acceso al BSS:</b> " + feature.properties["Ruta de Acceso al BSS"] + "<br>" +
+                  "<b>Dirección:</b> " + feature.properties.Dirección + "<br>" +
+                    "<b>Observaciones:</b> " + feature.properties.Observaciones + "<br>" +
+                    '<img id="imgchange" src="' + feature.properties.visual + '" alt="Imagen Cambiante"><br>' +
+                    '<div class="button-group">' +
+                    '<button class="image-button" data-image-url="' + feature.properties.visual + '">Foto 1</button>' +
+                    '<button class="image-button" data-image-url="' + feature.properties.visual2 + '">Foto 2</button>' +
+                    '<a href="' + feature.properties.Ficha + '" download>' +
+                    '<button class="download-button">Descargar Ficha</button>' +
+                    '</a>' +
+                    '</div>';
+                marker.bindPopup(popupContent);
+
+                marker.on('click', function (e) {
+                    marker.openPopup();
+
+                  //   Agregar el código para cambiar la imagen al hacer clic en los botones
+                    let buttons = document.querySelectorAll(".image-button");
+                    let imgchange = document.getElementById("imgchange");
+
+                    buttons.forEach(button => {
+                        button.addEventListener("click", function () {
+                            let imageUrl = this.getAttribute("data-image-url");
+                            imgchange.src = imageUrl;
+                        });
+                    });
+                });
+
+                return marker;
+            }
+        }).addTo(map);
+
+  // Huella
+  var huella = L.geoJSON(huella).addTo(map);
+
+    // Polyne
+    var polyne = L.geoJSON(polyne, {
+      style: style,
+      onEachFeature: function (feature, layer) {
+          layer.bindPopup("<b>Site de Inicio:</b> " + feature.properties.site_inicio + "<br>" + "<b>Tipo de Cable:</b> " + feature.properties.Layer);
+      }
+  }).addTo(map);
