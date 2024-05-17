@@ -12,11 +12,7 @@
     <div id="map">
         <img id="logo" src="logoinfratel.png" alt="Logo INFRATEL" width="100" height="auto"></div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="huella.js"></script>
     <script src="point.js"></script>
-    <script src="polyne.js"></script>
-    <script src="FO.js"></script>
-    <script src="FIBER.js"></script>
     <script src="TENDIDOFO.js"></script>
     <script src="DEPARTAMENTOS.js"></script>
     <script src="PROVINCIAS.js"></script>
@@ -133,27 +129,7 @@ var pointIcon = L.icon({
                                 "<b>URL DEL PROYECTO:</b> " + feature.properties.URL);
             }
         }).addTo(map);
-         // TRAMO ICA PALPA NAZCA / LURIN - CHILCA
-         var FIBER = L.geoJSON(FIBER, {
-            style: style,
-            onEachFeature: function (feature, layer) {
-                layer.bindPopup("<b>TRAMO: </b> " + feature.properties.TRAMO + "<br>" +
-                                "<b>PROYECTO: </b> " + feature.properties.NOM_PROYEC + "<br>" +
-                                "<b>CANTIDAD DE FIBRA: </b> " + feature.properties.LONGITUD +"<br>" +
-                                "<b>POSTES EXISTENTES: </b> " + feature.properties.P_EXIST+ "<br>" +
-                                "<b>POSTES ALTA TENSION: </b> " + feature.properties.P_AT +"<br>" +
-                                "<b>POSTES MEDIA TENSION: </b> " + feature.properties.P_MT + "<br>" +
-                                "<b>POSTES BAJA TENSION: </b> " + feature.properties.P_BT +"<br>" +
-                                "<b>TORRES ALTA TENSION: </b> " + feature.properties.T_AT + "<br>" +
-                                "<b>TORRES MEDIA TENSION: </b> " + feature.properties.T_MT +"<br>" +
-                                "<b>TORRES BAJA TENSION: </b> " + feature.properties.T_BT + "<br>" +
-                                "<b>EMPRESA ELECTRICA: </b> " + feature.properties.E_ELECTRIC +"<br>" +
-                                "<b>POSTES WOW PROYECTADOS: </b> " + feature.properties.P_WOW_PROY+ "<br>" +
-                                "<b>POSTES WOW EXISTENTES: </b> " + feature.properties.P_WOW_EXIS +"<br>" +
-                                "<b>ESTADO: </b> " + feature.properties.ESTADO+ "<br>" +
-                                "<b>URL DEL PROYECTO:</b> " + feature.properties.URL);
-            }
-        }).addTo(map);
+
     </script>
 </body>
 </html>
