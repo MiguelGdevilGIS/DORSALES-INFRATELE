@@ -113,7 +113,7 @@ var pointIcon = L.icon({
 };
 
         // TRAMO ICA PALPA NAZCA / LURIN - CHILCA
-        var TENDIDOFO_layer = L.geoJSON(TENDIDOFO, {
+        var TENDIDOFO = L.geoJSON(TENDIDOFO, {
             style: style,
             onEachFeature: function (feature, layer) {
                 layer.bindPopup("<b>TRAMO: </b> " + feature.properties.TRAMO + "<br>" +
