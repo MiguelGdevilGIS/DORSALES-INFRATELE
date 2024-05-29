@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,13 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="idol.css">
 </head>
+
 <body>
     <div id="map">
-        <img id="logo" src="logoinfratel.png" alt="Logo INFRATEL" width="100" height="auto"></div>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+        <img id="logo" src="logoinfratel.png" alt="Logo INFRATEL" width="100" height="auto">
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="point.js"></script>
     <script src="TENDIDOFO.js"></script>
     <script src="DEPARTAMENTOS.js"></script>
@@ -40,54 +44,54 @@
         });
 
         var baseLayers = {
-    "Google Maps":googleMaps,
-    "Open Street Maps":openStreetMap,
-    "Google Satellite":googleSat,
-};
+            "Google Maps": googleMaps,
+            "Open Street Maps": openStreetMap,
+            "Google Satellite": googleSat,
+        };
 
-var styleDashed = {
-    color: 'blue',
-    opacity: 1.0,
-    weight: 1,
-    fill: false // Esto desactiva el relleno
-};
+        var styleDashed = {
+            color: 'blue',
+            opacity: 1.0,
+            weight: 1,
+            fill: false // Esto desactiva el relleno
+        };
 
-// Define las capas sin agregarlas al mapa
-var DEPARTAMENTOS = L.geoJSON(DEPARTAMENTOS, {
-    style: styleDashed, // Aplica el estilo de línea punteada
-            onEachFeature: function(feature, layer) {
+        // Define las capas sin agregarlas al mapa
+        var DEPARTAMENTOS = L.geoJSON(DEPARTAMENTOS, {
+            style: styleDashed, // Aplica el estilo de línea punteada
+            onEachFeature: function (feature, layer) {
                 // Muestra el nombre del distrito como etiqueta
                 layer.bindTooltip('Departamento de ' + feature.properties.nombdep, { permanent: true, direction: 'auto' }).openTooltip();
             },
             interactive: false
         });
 
-var PROVINCIAS = L.geoJSON(PROVINCIAS, {
-    style: styleDashed, // Aplica el estilo de línea punteada
-            onEachFeature: function(feature, layer) {
+        var PROVINCIAS = L.geoJSON(PROVINCIAS, {
+            style: styleDashed, // Aplica el estilo de línea punteada
+            onEachFeature: function (feature, layer) {
                 // Muestra el nombre del distrito como etiqueta
                 layer.bindTooltip('Provincia de ' + feature.properties.nombprov, { permanent: true, direction: 'auto' }).openTooltip();
             },
             interactive: false
         });
-var DISTRITOS = L.geoJSON(DISTRITOS, {
+        var DISTRITOS = L.geoJSON(DISTRITOS, {
             style: styleDashed, // Aplica el estilo de línea punteada
-            onEachFeature: function(feature, layer) {
+            onEachFeature: function (feature, layer) {
                 // Muestra el nombre del distrito como etiqueta
                 layer.bindTooltip('Distrito de ' + feature.properties.name_3, { permanent: true, direction: 'auto' }).openTooltip();
             },
             interactive: false
         });
 
-// Agrega las capas al control de capas, pero sin estar marcadas por defecto
-var controlLayers = L.control.layers(baseLayers, {
-    "Departamentos": DEPARTAMENTOS,
-    "Provincias": PROVINCIAS,
-    "Distritos": DISTRITOS
-}, { collapsed: true }).addTo(map);
+        // Agrega las capas al control de capas, pero sin estar marcadas por defecto
+        var controlLayers = L.control.layers(baseLayers, {
+            "Departamentos": DEPARTAMENTOS,
+            "Provincias": PROVINCIAS,
+            "Distritos": DISTRITOS
+        }, { collapsed: true }).addTo(map);
 
 
-var pointIcon = L.icon({
+        var pointIcon = L.icon({
             iconUrl: 'Site2.png',
             iconSize: [32, 32],
             iconAnchor: [16, 32]
@@ -95,41 +99,42 @@ var pointIcon = L.icon({
         var point = L.geoJSON(pointJSON, {
             pointToLayer: function (feature, latlng) {
                 var marker = L.marker(latlng, { icon: pointIcon });
-                var tooltipContent =  feature.properties.Name;
+                var tooltipContent = feature.properties.Name;
                 marker.bindTooltip(tooltipContent, { permanent: true, direction: 'bottom', className: 'marker-label' });
                 marker.bindPopup('<b>' + feature.properties.Name + '</b><br><img src="' + feature.properties.visual);
                 return marker;
             }
         }).addTo(map);
         var style = {
-    color: 'magenta',
-    opacity: 1.0,
-    fillOpacity: 0.2,
-    weight: 3
-};
+            color: 'magenta',
+            opacity: 1.0,
+            fillOpacity: 0.2,
+            weight: 3
+        };
 
-        // TRAMO ICA PALPA NAZCA / LURIN - CHILCA
+        // TRAMOS
         var TENDIDOFO = L.geoJSON(TENDIDOFO, {
             style: style,
             onEachFeature: function (feature, layer) {
                 layer.bindPopup("<b>TRAMO: </b> " + feature.properties.TRAMO + "<br>" +
-                                "<b>PROYECTO: </b> " + feature.properties.NOM_PROYEC + "<br>" +
-                                "<b>CANTIDAD DE FIBRA: </b> " + feature.properties.LONGITUD +"<br>" +
-                                "<b>POSTES EXISTENTES: </b> " + feature.properties.P_EXIST+ "<br>" +
-                                "<b>POSTES ALTA TENSION: </b> " + feature.properties.P_AT +"<br>" +
-                                "<b>POSTES MEDIA TENSION: </b> " + feature.properties.P_MT + "<br>" +
-                                "<b>POSTES BAJA TENSION: </b> " + feature.properties.P_BT +"<br>" +
-                                "<b>TORRES ALTA TENSION: </b> " + feature.properties.T_AT + "<br>" +
-                                "<b>TORRES MEDIA TENSION: </b> " + feature.properties.T_MT +"<br>" +
-                                "<b>TORRES BAJA TENSION: </b> " + feature.properties.T_BT + "<br>" +
-                                "<b>EMPRESA ELECTRICA: </b> " + feature.properties.E_ELECTRIC +"<br>" +
-                                "<b>POSTES WOW PROYECTADOS: </b> " + feature.properties.P_WOW_PROY+ "<br>" +
-                                "<b>POSTES WOW EXISTENTES: </b> " + feature.properties.P_WOW_EXIS +"<br>" +
-                                "<b>ESTADO: </b> " + feature.properties.ESTADO+ "<br>" +
-                                "<b>URL DEL PROYECTO:</b> " + feature.properties.URL);
+                    "<b>PROYECTO: </b> " + feature.properties.NOM_PROYEC + "<br>" +
+                    "<b>CANTIDAD DE FIBRA: </b> " + feature.properties.LONGITUD + "<br>" +
+                    "<b>POSTES EXISTENTES: </b> " + feature.properties.P_EXIST + "<br>" +
+                    "<b>POSTES ALTA TENSION: </b> " + feature.properties.P_AT + "<br>" +
+                    "<b>POSTES MEDIA TENSION: </b> " + feature.properties.P_MT + "<br>" +
+                    "<b>POSTES BAJA TENSION: </b> " + feature.properties.P_BT + "<br>" +
+                    "<b>TORRES ALTA TENSION: </b> " + feature.properties.T_AT + "<br>" +
+                    "<b>TORRES MEDIA TENSION: </b> " + feature.properties.T_MT + "<br>" +
+                    "<b>TORRES BAJA TENSION: </b> " + feature.properties.T_BT + "<br>" +
+                    "<b>EMPRESA ELECTRICA: </b> " + feature.properties.E_ELECTRIC + "<br>" +
+                    "<b>POSTES WOW PROYECTADOS: </b> " + feature.properties.P_WOW_PROY + "<br>" +
+                    "<b>POSTES WOW EXISTENTES: </b> " + feature.properties.P_WOW_EXIS + "<br>" +
+                    "<b>ESTADO: </b> " + feature.properties.ESTADO + "<br>" +
+                    "<b>URL DEL PROYECTO:</b> " + feature.properties.URL);
             }
         }).addTo(map);
 
     </script>
 </body>
+
 </html>
